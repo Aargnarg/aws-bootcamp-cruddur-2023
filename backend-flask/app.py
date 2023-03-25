@@ -88,8 +88,8 @@ def init_rollbar():
 
 
 #AWS-XRAY-SDK -------------------------------------------
-#xray_url = os.getenv("AWS_XRAY_URL")
-#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
 # HoneyComb -------------------------------------------
@@ -157,19 +157,20 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
-  app.logger.debut(request.headers)
-  access_token = cognito_jwt_token.extract_access_token(request.headers)
+  #app.logger.debug(request.headers)
+  access_token = extract_access_token(request.headers)
   try:
     claims = cognito_jwt_token.verify(access_token)
     #authenticated request     
     app.logger.debug("authenticated")
-    app.logger.debug('claims')
     app.logger.debug(claims)
+    app.logger.debug(claims['username'])
+    data = HomeActivities.run(cognito_user_id=claims['username'])
   except TokenVerifyError as e:
     #unauthenticated request
+    app.logger.debug(e)
     app.logger.debug("unauthenticated")
-
-  data = HomeActivities.run()
+    data = HomeActivities.run()
 
   return data, 200
 
