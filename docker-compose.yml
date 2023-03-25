@@ -13,7 +13,8 @@ services:
       AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
       AWS_XRAY_DAEMON_ADDRESS: "xray-daemon:2000"
       ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
-    
+      AWS_COGNITO_USER_POOL_ID: "us-east-1_WoxGoY0A7"
+      AWS_COGNITO_USER_POOL_CLIENT_ID: "7hdhhvo6871st9i8jd27o36ues"
     build: ./backend-flask
     ports:
       - "4567:4567"
@@ -24,8 +25,8 @@ services:
       REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_USER_POOLS_ID: "us-east-1_YERB7qgjo"
-      REACT_APP_CLIENT_ID: "9jqlfojqf390pb78b8v3f4kcd"
+      REACT_APP_AWS_USER_POOLS_ID: "us-east-1_WoxGoY0A7"
+      REACT_APP_CLIENT_ID: "7hdhhvo6871st9i8jd27o36ues"
     build: ./frontend-react-js
     ports:
       - "3000:3000"
